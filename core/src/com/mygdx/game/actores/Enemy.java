@@ -2,6 +2,7 @@ package com.mygdx.game.actores;
 
 
 import static com.mygdx.game.extra.Utils.USER_ENEMY;
+import static com.mygdx.game.extra.Utils.WORLD_WIDTH;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,21 +20,20 @@ public class Enemy extends Actor {
     private static final float ENEMY_WIDTH = 0.55f;
     private static final float ENEMY_HEIGHT = 1f;
 
-    //Todo. Crear un contador para que el susuwatari fuera contando las monedas que va cogiendo
-    // USAR EN UNA CLASE DIFERENTE PARA EL COUNTER CCOMO MONEDAS
-    // private static final float COUNTER_HEIGHT = 1f;
 
 
     //CONTADOR DE VELOCIDAD (controlar la velocidad a la que pasan los bloques)
     //velocidad positiva hacia arriba
-    public static final float SPEED = 1.1f;
+    public static final float SPEED = 2.5f;
 
     //Todo. Creación las Texture,Body, fixture y mundo
     private TextureRegion enemy;
 
     private Body bodyEnemy;
+    private Body bodyCounter;
 
     private Fixture fixtureEnemy;
+    private Fixture fixtureCounter;
 
 
     private World world;
@@ -44,6 +44,7 @@ public class Enemy extends Actor {
 
         createBodyEnemy(position);
         createFixture();
+        createCounter();
 
     }
 
@@ -78,10 +79,28 @@ public class Enemy extends Actor {
         shape.dispose();
     }
 
+    public void createCounter(){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.x = this.bodyEnemy.getPosition().x;
+        bodyDef.position.y = this.bodyEnemy.getPosition().y ;
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        this.bodyCounter = this.world.createBody(bodyDef);
+        this.bodyCounter.setLinearVelocity(0,SPEED);
+
+        PolygonShape polygonShape = new PolygonShape();
+        polygonShape.setAsBox(WORLD_WIDTH,0.1f);
+
+        this.fixtureCounter = bodyCounter.createFixture(polygonShape,3);
+        this.fixtureCounter.setSensor(true);
+        this.fixtureCounter.setUserData(Utils.USER_COUNTER);
+        polygonShape.dispose();
+    }
+
 
     //Todo. Parar los enemigos
     public void stopEnemy(){
         bodyEnemy.setLinearVelocity(0,0);
+        bodyCounter.setLinearVelocity(0,0);
     }
     //Todo. Sobrecarga de metodos
     @Override

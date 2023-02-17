@@ -6,6 +6,7 @@ import static com.mygdx.game.extra.Utils.BLOCK;
 import static com.mygdx.game.extra.Utils.ENEMY;
 import static com.mygdx.game.extra.Utils.FONT_FNT;
 import static com.mygdx.game.extra.Utils.FONT_PNG;
+import static com.mygdx.game.extra.Utils.GAMEOVER_SOUND;
 import static com.mygdx.game.extra.Utils.HIT_SOUND;
 import static com.mygdx.game.extra.Utils.MUSIC_BG;
 import static com.mygdx.game.extra.Utils.SOUND_FALL;
@@ -63,6 +64,9 @@ public class AssetMan {
     public Sound getHit(){
         return this.assetManager.get(HIT_SOUND);
     }
+    /*public Sound getGameOver(){
+        return this.assetManager.get(GAMEOVER_SOUND);
+    }*/
 
     //iDENTIFICADORES DE LOS UTILS
     public BitmapFont getFont(){

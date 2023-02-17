@@ -97,8 +97,10 @@ public class Susuwatari extends Actor {
         }else if(fall < -1 ){
             //this.fallSound.play();
             this.body.setLinearVelocity(3,-FALL_SPEED);
+            this.fallSound.play();
         }else{
             this.body.setLinearVelocity(0,-FALL_SPEED);
+            this.fallSound.play();
         }
     }
 

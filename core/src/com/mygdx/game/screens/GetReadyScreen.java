@@ -5,5 +5,9 @@ import com.mygdx.game.MainGame;
 public class GetReadyScreen extends BaseScreen{
     public GetReadyScreen(MainGame mainGame) {
         super(mainGame);
+
+        //llama a la cámara
+
     }
+
 }

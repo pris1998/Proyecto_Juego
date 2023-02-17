@@ -2,6 +2,7 @@ package com.mygdx.game.screens;
 
 import static com.mygdx.game.extra.Utils.SCREEN_HEIGHT;
 import static com.mygdx.game.extra.Utils.SCREEN_WIDTH;
+import static com.mygdx.game.extra.Utils.USER_COUNTER;
 import static com.mygdx.game.extra.Utils.USER_ENEMY;
 import static com.mygdx.game.extra.Utils.USER_LEFT;
 import static com.mygdx.game.extra.Utils.USER_RIGHT;
@@ -28,6 +29,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -120,12 +122,14 @@ public class GameScreen extends BaseScreen implements ContactListener {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         this.bodyRigth = world.createBody(bodyDef);
+        bodyDef.position.set(0,1);
 
         EdgeShape edge = new EdgeShape();
-        edge.set(0,WORLD_HEIGHT,WORLD_WIDTH,WORLD_HEIGHT);
+        edge.set(WORLD_WIDTH,0 ,WORLD_HEIGHT,WORLD_WIDTH);
         this.fixtureRigth = this.bodyRigth.createFixture(edge,1);
         this.fixtureRigth.setUserData(USER_RIGHT);
         edge.dispose();
+
 
     }
 
@@ -136,12 +140,17 @@ public class GameScreen extends BaseScreen implements ContactListener {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         this.bodyLeft = world.createBody(bodyDef);
+        bodyDef.position.set(1,1);
+
 
         EdgeShape edge = new EdgeShape();
-        edge.set(0,WORLD_HEIGHT,WORLD_WIDTH,WORLD_HEIGHT);
+        //edge.set(WORLD_WIDTH,0 ,WORLD_HEIGHT,WORLD_WIDTH);
+        edge.set(0,0,0,WORLD_HEIGHT);
         this.fixtureLeft = this.bodyLeft.createFixture(edge,1);
         this.fixtureLeft.setUserData(USER_LEFT);
         edge.dispose();
+
+
     }
 
 
@@ -261,7 +270,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        if (areColisioner(contact,USER_SUSUWATARI,USER_ENEMY) ) {
+        if (areColisioner(contact,USER_SUSUWATARI,USER_COUNTER) ) {
             this.scoreNumber++;
         }else{
             susuwatari.hurt();
