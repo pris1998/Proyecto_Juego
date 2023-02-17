@@ -14,8 +14,15 @@ public class Utils {
     public static final String SUSUWATARI2 = "Suswatari1.1";
     public static final String ENEMY = "kaonashi";
     public static final String BLOCK = "Block";
-    public static final String SOUND_SUSUWATARI = "";
-    public static final String MUSIC_BG = "";
+    public static final String SOUND_FALL = "caida.mp3";
+    public static final String MUSIC_BG = "music_asia.mp3";
+    //public static final String HIT_SOUND = "";
+    //public static final String GAMEOVER_SOUND = "";
+
+    //Identificadores de las fuentes
+    public static final String PFONT_FNT = "";
+    public static final String FONT_PNG = "PFontATLAS.png";
+
 
 
     //Identifircador de cuerpo

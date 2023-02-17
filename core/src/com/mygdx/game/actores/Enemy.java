@@ -20,7 +20,8 @@ public class Enemy extends Actor {
     private static final float ENEMY_HEIGHT = 1f;
 
     //Todo. Crear un contador para que el susuwatari fuera contando las monedas que va cogiendo
-    private static final float COUNTER_HEIGHT = 1f;
+    // USAR EN UNA CLASE DIFERENTE PARA EL COUNTER CCOMO MONEDAS
+    // private static final float COUNTER_HEIGHT = 1f;
 
 
     //CONTADOR DE VELOCIDAD (controlar la velocidad a la que pasan los bloques)
@@ -31,8 +32,6 @@ public class Enemy extends Actor {
     private TextureRegion enemy;
 
     private Body bodyEnemy;
-    //Counter sería con una clase Monedas
-    //private Body bodyCounter;
 
     private Fixture fixtureEnemy;
 
@@ -45,7 +44,6 @@ public class Enemy extends Actor {
 
         createBodyEnemy(position);
         createFixture();
-
 
     }
 
@@ -75,10 +73,16 @@ public class Enemy extends Actor {
         shape.setAsBox(ENEMY_WIDTH /2, ENEMY_HEIGHT /2);
         //densidad de 12 (como solo es uno )
         this.fixtureEnemy = bodyEnemy.createFixture(shape,12);
+        this.fixtureEnemy.setUserData(Utils.USER_ENEMY);
 
         shape.dispose();
     }
 
+
+    //Todo. Parar los enemigos
+    public void stopEnemy(){
+        bodyEnemy.setLinearVelocity(0,0);
+    }
     //Todo. Sobrecarga de metodos
     @Override
     public void act(float delta) {
@@ -97,7 +101,7 @@ public class Enemy extends Actor {
     }
 
     //Todo.Metodo avisa si el objeto esta fuera de la pantalla
-    public boolean isOutOfScreen(){
+    public boolean isOut(){
         return this.bodyEnemy.getPosition().x <= -2f;
     }
 

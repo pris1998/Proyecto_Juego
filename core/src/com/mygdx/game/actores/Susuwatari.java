@@ -3,6 +3,7 @@ package com.mygdx.game.actores;
 import static com.mygdx.game.extra.Utils.USER_SUSUWATARI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,8 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Susuwatari extends Actor {
     //Estados del Actor
     public static final int STATE_NORMAL = 0;
+    public static final int STATE_DEAD = 1;
+
     //la potencia de la caída
-    public static final float FALL_SPEED = 0.5f;
+    private static final float FALL_SPEED = 0.3f;
 
     private int state;
 
@@ -32,15 +35,16 @@ public class Susuwatari extends Actor {
      private Body body ;
      private Fixture fixture;
 
-     //private Sound fallSound;
+     private Sound fallSound;
 
-    public Susuwatari( World world,Animation<TextureRegion> susuAnimation, Vector2 position) {
+    public Susuwatari( World world,Animation<TextureRegion> susuAnimation,Sound sound, Vector2 position) {
         this.susuAnimation = susuAnimation;
         this.position = position;
         this.world = world;
 
         this.stateTime = 0f;
         this.state = STATE_NORMAL;
+        this.fallSound = sound;
 
         createBody();
         createFixture();
@@ -54,15 +58,26 @@ public class Susuwatari extends Actor {
         this.body = this.world.createBody(bodyDef);
     }
 
-    public void createFixture(){
+    private void createFixture(){
         CircleShape circle = new CircleShape();
-        circle.setRadius(0.30f);
+        circle.setRadius(0.20f);
 
         this.fixture = this.body.createFixture(circle,6);
         this.fixture.setUserData(USER_SUSUWATARI);
 
         circle.dispose();
     }
+
+    public int getState(){
+        return this.state;
+    }
+
+    //Método para controlar el estado del personaje
+    public void hurt(){
+        state = STATE_DEAD;
+        stateTime = 0f;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         //Mover el fixture de circunferencia en x e y
@@ -73,17 +88,14 @@ public class Susuwatari extends Actor {
         stateTime += Gdx.graphics.getDeltaTime();
     }
 
-    public int getState(){
-        return this.state;
-    }
-
-
     @Override
     public void act(float delta) {
         float fall = Gdx.input.getAccelerometerX();
         if (fall > 1) {
+            this.fallSound.play();
             this.body.setLinearVelocity(-3,-FALL_SPEED);
         }else if(fall < -1 ){
+            //this.fallSound.play();
             this.body.setLinearVelocity(3,-FALL_SPEED);
         }else{
             this.body.setLinearVelocity(0,-FALL_SPEED);
