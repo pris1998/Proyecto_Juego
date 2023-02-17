@@ -16,19 +16,20 @@ public class Utils {
     public static final String BLOCK = "Block";
     public static final String SOUND_FALL = "caida.mp3";
     public static final String MUSIC_BG = "music_asia.mp3";
-    //public static final String HIT_SOUND = "";
+    public static final String HIT_SOUND = "hit.mp3";
     //public static final String GAMEOVER_SOUND = "";
 
     //Identificadores de las fuentes
-    public static final String PFONT_FNT = "";
-    public static final String FONT_PNG = "PFontATLAS.png";
+    public static final String FONT_FNT = "letras.fnt";
+    public static final String FONT_PNG = "letras.png";
 
 
 
     //Identifircador de cuerpo
     public static final String USER_SUSUWATARI = "susuwatari";
     public static final String USER_ENEMY = "enemy";
-    public static final String USER_BLOCK = "counter";
     public static final String USER_COUNTER = "counter";
+    public static final String USER_RIGHT = "rigth";
+    public static final String USER_LEFT = "left";
 
 }

@@ -1,5 +1,11 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.extra.Utils.SCREEN_HEIGHT;
+import static com.mygdx.game.extra.Utils.SCREEN_WIDTH;
+import static com.mygdx.game.extra.Utils.USER_ENEMY;
+import static com.mygdx.game.extra.Utils.USER_LEFT;
+import static com.mygdx.game.extra.Utils.USER_RIGHT;
+import static com.mygdx.game.extra.Utils.USER_SUSUWATARI;
 import static com.mygdx.game.extra.Utils.WORLD_HEIGHT;
 import static com.mygdx.game.extra.Utils.WORLD_WIDTH;
 
@@ -14,14 +20,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -30,8 +39,9 @@ import com.mygdx.game.actores.Enemy;
 import com.mygdx.game.actores.Susuwatari;
 
 public class GameScreen extends BaseScreen implements ContactListener {
+
     //Todo. Constante indica el tiempo que queremos q dure el enemigo en la pantalla
-    private static final float TIME_TO_SPAWN_ENEMIES = 1.5f;
+    private static final float TIME_TO_SPAWN_ENEMIES = 1.3f;
     private float timeToCreateEnemy;
     private Stage stage;
     private Susuwatari susuwatari;
@@ -52,7 +62,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
 
     //Musica y sonidos
     private Music musicbg;
-    private Sound fallSound;
+    private Sound hitSound;
     private Sound gameOverSound;
 
     //Depuración
@@ -69,17 +79,20 @@ public class GameScreen extends BaseScreen implements ContactListener {
         this.world = new World(new Vector2(0,-10),true);
         //
         this.world.setContactListener(this);
+
         FitViewport fitViewport = new FitViewport(WORLD_WIDTH,WORLD_HEIGHT);
         this.stage = new Stage(fitViewport);
 
-        this.musicbg = this.mainGame.assetManager.getMusicBG();
+        //Todo.Inicialización del array
+        this.arrayenemies = new Array();
+        this.timeToCreateEnemy = 0.8f;
+
         this.ortCamera = (OrthographicCamera) this.stage.getCamera();
         this.debugRenderer = new Box2DDebugRenderer();
 
-        //Todo.Inicialización del array
-        this.arrayenemies = new Array();
-        this.timeToCreateEnemy = 1f;
-
+        //llamar al los metodos de la musica y el sonido
+        prepareScore();
+        prepareGameSound();
     }
 
     /**
@@ -99,6 +112,38 @@ public class GameScreen extends BaseScreen implements ContactListener {
         this.susuwatari = new Susuwatari(this.world,susuSprite,sound,new Vector2(1.5f,7.5f));
         this.stage.addActor(this.susuwatari);
     }
+
+    /**
+     * Metodo que añade la pared de la izquierda
+     */
+    private void addRigth(){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        this.bodyRigth = world.createBody(bodyDef);
+
+        EdgeShape edge = new EdgeShape();
+        edge.set(0,WORLD_HEIGHT,WORLD_WIDTH,WORLD_HEIGHT);
+        this.fixtureRigth = this.bodyRigth.createFixture(edge,1);
+        this.fixtureRigth.setUserData(USER_RIGHT);
+        edge.dispose();
+
+    }
+
+    /**
+     * Metodo que añade la pared de la derecha
+     */
+    private void addLeft(){
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        this.bodyLeft = world.createBody(bodyDef);
+
+        EdgeShape edge = new EdgeShape();
+        edge.set(0,WORLD_HEIGHT,WORLD_WIDTH,WORLD_HEIGHT);
+        this.fixtureLeft = this.bodyLeft.createFixture(edge,1);
+        this.fixtureLeft.setUserData(USER_LEFT);
+        edge.dispose();
+    }
+
 
     public void addEnemy(float delta){
         TextureRegion oneEnemy = mainGame.assetManager.getEnemy();
@@ -139,10 +184,28 @@ public class GameScreen extends BaseScreen implements ContactListener {
         }
     }
 
+    private void prepareScore(){
+        this.scoreNumber = 0;
+        this.score = this.mainGame.assetManager.getFont();
+        this.score.getData().scale(1f);
+
+        this.fontCamera = new OrthographicCamera();
+        this.fontCamera.setToOrtho(false,SCREEN_WIDTH,SCREEN_HEIGHT);
+        this.fontCamera.update();
+    }
+
+    private void prepareGameSound(){
+        this.musicbg = this.mainGame.assetManager.getMusicBG();
+        this.hitSound = this.mainGame.assetManager.getHit();
+        //falta el gameOver
+    }
+
     @Override
     public void show() {
         addBackground();
         addSusuwatari();
+        addRigth();
+        addLeft();
 
         //AÑADE LA MUSICA Y EL SONIDO
         this.musicbg.setLooping(true);
@@ -155,17 +218,24 @@ public class GameScreen extends BaseScreen implements ContactListener {
         //Todo . Añado los enemigos en función del tiempo, delta almacena el tiempo el cual sale
         // enemigo cuando sale al tope de tiempo se recarga a 0
         addEnemy(delta);
-
+        //para una de las camaras
         this.stage.getBatch().setProjectionMatrix(ortCamera.combined);
         this.stage.act();
-        this.world.step(delta,2,2);
+        this.world.step(delta,6,2);
         this.stage.draw();
 
         this.debugRenderer.render(this.world,this.ortCamera.combined);
 
         //Todo. Llamamos al metodo de eliminar enemigos para cuando salgan de la pantalla
         removeEnemies();
+
+        //hacer lo mismo para la otra camara
+        this.stage.getBatch().setProjectionMatrix(this.fontCamera.combined);
+        this.stage.getBatch().begin();
+        this.score.draw(this.stage.getBatch(), "" + this.scoreNumber,SCREEN_WIDTH/2, 725);
+        this.stage.getBatch().end();
     }
+
 
     @Override
     public void dispose() {
@@ -184,9 +254,36 @@ public class GameScreen extends BaseScreen implements ContactListener {
 
 
     //--------------COLISIONES------------------\\
+    private boolean areColisioner(Contact contact, Object actorA, Object actorB){
+        return (contact.getFixtureA().getUserData().equals(actorA) && contact.getFixtureB().getUserData().equals(actorB)
+                || contact.getFixtureA().getUserData().equals(actorB) && contact.getFixtureB().getUserData().equals(actorA));
+    }
+
     @Override
     public void beginContact(Contact contact) {
+        if (areColisioner(contact,USER_SUSUWATARI,USER_ENEMY) ) {
+            this.scoreNumber++;
+        }else{
+            susuwatari.hurt();
+            this.hitSound.play();
 
+            this.musicbg.stop();
+            //this.gameOverSound.play();
+
+            for (Enemy enemy : arrayenemies) {
+                enemy.stopEnemy();
+            }
+
+            this.stage.addAction(Actions.sequence(
+                    Actions.delay(1.5f),
+                    Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            mainGame.setScreen(mainGame.gameOverScreen);
+                        }
+                    })
+            ));
+        }
     }
 
     @Override
