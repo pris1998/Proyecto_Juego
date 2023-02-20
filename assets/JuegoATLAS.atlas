@@ -1,55 +1,62 @@
 
 JuegoATLAS.png
-size: 1024, 1024
+size: 623, 1050
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-Block
+Exit
   rotate: false
-  xy: 2, 2
-  size: 168, 50
-  orig: 168, 50
+  xy: 2, 6
+  size: 192, 103
+  orig: 192, 103
   offset: 0, 0
   index: -1
 GameOver
   rotate: false
-  xy: 484, 856
-  size: 492, 102
-  orig: 492, 102
+  xy: 2, 111
+  size: 371, 68
+  orig: 371, 68
   offset: 0, 0
   index: -1
 GetReady
   rotate: false
-  xy: 2, 54
-  size: 456, 102
-  orig: 456, 102
+  xy: 2, 181
+  size: 382, 65
+  orig: 382, 65
   offset: 0, 0
   index: -1
 Suswatari1.1
   rotate: false
-  xy: 623, 610
+  xy: 375, 2
   size: 209, 121
   orig: 209, 121
   offset: 0, 0
   index: -1
 Suswataria1.2
   rotate: false
-  xy: 623, 733
+  xy: 386, 125
   size: 209, 121
   orig: 209, 121
   offset: 0, 0
   index: -1
 fondoJuego
   rotate: false
-  xy: 2, 158
+  xy: 2, 248
   size: 480, 800
   orig: 480, 800
   offset: 0, 0
   index: -1
 kaonashi
   rotate: false
-  xy: 484, 591
+  xy: 484, 785
   size: 137, 263
   orig: 137, 263
+  offset: 0, 0
+  index: -1
+touch1Vale
+  rotate: false
+  xy: 484, 673
+  size: 110, 110
+  orig: 110, 110
   offset: 0, 0
   index: -1

@@ -2,17 +2,20 @@ package com.mygdx.game.extra;
 
 import static com.mygdx.game.extra.Utils.ATLAS_MAP;
 import static com.mygdx.game.extra.Utils.BACKGROUND_IMAGE;
-import static com.mygdx.game.extra.Utils.BLOCK;
+
 import static com.mygdx.game.extra.Utils.ENEMY;
 import static com.mygdx.game.extra.Utils.FONT_FNT;
 import static com.mygdx.game.extra.Utils.FONT_PNG;
+import static com.mygdx.game.extra.Utils.GAMEOVER;
 import static com.mygdx.game.extra.Utils.GAMEOVER_SOUND;
+import static com.mygdx.game.extra.Utils.GETREADY;
 import static com.mygdx.game.extra.Utils.HIT_SOUND;
 import static com.mygdx.game.extra.Utils.MUSIC_BG;
 import static com.mygdx.game.extra.Utils.SOUND_FALL;
 import static com.mygdx.game.extra.Utils.SOUND_FALL;
 import static com.mygdx.game.extra.Utils.SUSUWATARI1;
 import static com.mygdx.game.extra.Utils.SUSUWATARI2;
+import static com.mygdx.game.extra.Utils.TOUCH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -74,5 +77,15 @@ public class AssetMan {
         return new BitmapFont(Gdx.files.internal(FONT_FNT),Gdx.files.internal(FONT_PNG),false);
     }
 
+    public TextureRegion getGameOver(){
+        return this.assetManager.get(GAMEOVER);
+    }
+    public TextureRegion getGetReady(){
+        return this.assetManager.get(GETREADY);
+    }
+
+    public TextureRegion getTouch(){
+        return this.assetManager.get(TOUCH);
+    }
 
 }

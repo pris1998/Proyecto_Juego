@@ -130,7 +130,6 @@ public class GameScreen extends BaseScreen implements ContactListener {
         this.fixtureRigth.setUserData(USER_RIGHT);
         edge.dispose();
 
-
     }
 
     /**
@@ -142,14 +141,12 @@ public class GameScreen extends BaseScreen implements ContactListener {
         this.bodyLeft = world.createBody(bodyDef);
         bodyDef.position.set(1,1);
 
-
         EdgeShape edge = new EdgeShape();
         //edge.set(WORLD_WIDTH,0 ,WORLD_HEIGHT,WORLD_WIDTH);
         edge.set(0,0,0,WORLD_HEIGHT);
         this.fixtureLeft = this.bodyLeft.createFixture(edge,1);
         this.fixtureLeft.setUserData(USER_LEFT);
         edge.dispose();
-
 
     }
 
@@ -243,6 +240,8 @@ public class GameScreen extends BaseScreen implements ContactListener {
         this.stage.getBatch().begin();
         this.score.draw(this.stage.getBatch(), "" + this.scoreNumber,SCREEN_WIDTH/2, 725);
         this.stage.getBatch().end();
+
+
     }
 
 
@@ -309,4 +308,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
+
+
+
 }
