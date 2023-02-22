@@ -13,16 +13,16 @@ Exit
   index: -1
 GameOver
   rotate: false
-  xy: 2, 111
-  size: 371, 68
-  orig: 371, 68
-  offset: 0, 0
-  index: -1
-GetReady
-  rotate: false
   xy: 2, 181
   size: 382, 65
   orig: 382, 65
+  offset: 0, 0
+  index: -1
+GameStart
+  rotate: false
+  xy: 2, 111
+  size: 371, 68
+  orig: 371, 68
   offset: 0, 0
   index: -1
 Suswatari1.1
@@ -53,7 +53,7 @@ kaonashi
   orig: 137, 263
   offset: 0, 0
   index: -1
-touch1Vale
+touch
   rotate: false
   xy: 484, 673
   size: 110, 110
