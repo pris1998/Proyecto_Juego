@@ -14,14 +14,15 @@ public class Utils {
     public static final String SUSUWATARI2 = "Suswatari1.1";
     public static final String ENEMY = "kaonashi";
     public static final String GAMEOVER = "GameOver";
-    public static final String GETREADY = "GetReady";
-    public static final String TOUCH = "touch1Vale";
+    public static final String GETREADY = "GameStart";
+    public static final String TOUCH = "touch";
 
     //Musica y sonido
     public static final String SOUND_FALL = "caida.mp3";
     public static final String MUSIC_BG = "music_asia.mp3";
     public static final String HIT_SOUND = "hit.mp3";
-    public static final String GAMEOVER_SOUND = "";
+    ///cambiar el gameover
+    public static final String GAMEOVER_SOUND = "caida2.mp3";
 
     //Identificadores de las fuentes
     public static final String FONT_FNT = "letras.fnt";

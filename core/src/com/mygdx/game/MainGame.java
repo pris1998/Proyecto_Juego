@@ -10,13 +10,15 @@ import com.mygdx.game.screens.GameScreen;
 import com.mygdx.game.screens.GetReadyScreen;
 
 public class MainGame extends Game {
-
+    //Creacion de un objeto por cada pantalla creada
     public GameOverScreen gameOverScreen;
+
     public GameScreen gameScreen;
+
     public GetReadyScreen getReadyScreen;
 
-
     public AssetMan assetManager;
+    //Inicialización de las pantallas
     @Override
     public void create() {
         this.assetManager = new AssetMan();
@@ -24,9 +26,10 @@ public class MainGame extends Game {
         this.gameScreen = new GameScreen(this);
 
         this.gameOverScreen = new GameOverScreen(this);
+
         this.getReadyScreen = new GetReadyScreen(this);
-        //insertar en la pantalla lo q hay en el gameScreen
-        setScreen(this.gameScreen);
+        //indicamos cual que queremos primero que se ejecute
+        setScreen(getReadyScreen);
     }
 
 }

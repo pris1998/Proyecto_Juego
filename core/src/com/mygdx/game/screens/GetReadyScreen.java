@@ -17,18 +17,15 @@ public class GetReadyScreen extends BaseScreen{
 
     private Image background;
     private Image touch;
+    private Image getReady;
 
     private Stage stage;
 
-    private World world;
-    private OrthographicCamera orthoCamera;
 
     public GetReadyScreen(MainGame mainGame) {
         super(mainGame);
-        this.world = new World(new Vector2(0,-10),true);
         FitViewport fitViewport = new FitViewport(WORLD_WIDTH,WORLD_HEIGHT);
         this.stage = new Stage(fitViewport);
-        this.orthoCamera = (OrthographicCamera) this.stage.getCamera();
 
     }
 
@@ -41,9 +38,15 @@ public class GetReadyScreen extends BaseScreen{
 
     public void addTouch(){
         this.touch = new Image(mainGame.assetManager.getTouch());
-        this.touch.setPosition(4f,1f);
-        this.touch.setSize(1.8f,1.2f);
+        this.touch.setPosition(WORLD_WIDTH/3f,4f);
+        this.touch.setSize(WORLD_WIDTH/3f,2f);
         this.stage.addActor(touch);
+    }
+    public void addGetReady(){
+        this.getReady = new Image(mainGame.assetManager.getGetReady());
+        this.getReady.setPosition(WORLD_WIDTH/4.5f,2f);
+        this.getReady.setSize(WORLD_WIDTH/1.5f,1.5f);
+        this.stage.addActor(getReady);
     }
 
     @Override
@@ -51,18 +54,14 @@ public class GetReadyScreen extends BaseScreen{
         super.show();
         addBackground();
         addTouch();
+        addGetReady();
     }
 
     @Override
     public void render(float delta) {
-        //lo dejo
-        super.render(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        this.stage.getBatch().setProjectionMatrix(orthoCamera.combined);
         this.stage.act();
-        this.world.step(delta,6,2);
         this.stage.draw();
-        this.orthoCamera.update();
         if (Gdx.input.justTouched()) {
             mainGame.setScreen(new GameScreen(mainGame));
         }

@@ -81,7 +81,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
         this.world = new World(new Vector2(0,-10),true);
         //
         this.world.setContactListener(this);
-
+        //se encarga de ajustar las medidas al mundo
         FitViewport fitViewport = new FitViewport(WORLD_WIDTH,WORLD_HEIGHT);
         this.stage = new Stage(fitViewport);
 
@@ -125,7 +125,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
         bodyDef.position.set(0,1);
 
         EdgeShape edge = new EdgeShape();
-        edge.set(WORLD_WIDTH,0 ,WORLD_HEIGHT,WORLD_WIDTH);
+        edge.set(WORLD_WIDTH,0 ,WORLD_WIDTH,WORLD_HEIGHT);
         this.fixtureRigth = this.bodyRigth.createFixture(edge,1);
         this.fixtureRigth.setUserData(USER_RIGHT);
         edge.dispose();
@@ -203,7 +203,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
     private void prepareGameSound(){
         this.musicbg = this.mainGame.assetManager.getMusicBG();
         this.hitSound = this.mainGame.assetManager.getHit();
-        //falta el gameOver
+        this.gameOverSound = this.mainGame.assetManager.getGameOver();
     }
 
     @Override
@@ -213,13 +213,16 @@ public class GameScreen extends BaseScreen implements ContactListener {
         addRigth();
         addLeft();
 
-        //AÑADE LA MUSICA Y EL SONIDO
+        //Ajustar la musica de fondo para que deje de sonar en forma de bucle
         this.musicbg.setLooping(true);
         this.musicbg.play();
     }
 
     @Override
     public void render(float delta) {
+        if (susuwatari.getState() == susuwatari.STATE_DEAD){
+            mainGame.setScreen(new GameOverScreen(this.mainGame));
+        }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //Todo . Añado los enemigos en función del tiempo, delta almacena el tiempo el cual sale
         // enemigo cuando sale al tope de tiempo se recarga a 0
@@ -230,7 +233,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
         this.world.step(delta,6,2);
         this.stage.draw();
 
-        this.debugRenderer.render(this.world,this.ortCamera.combined);
+        //this.debugRenderer.render(this.world,this.ortCamera.combined);
 
         //Todo. Llamamos al metodo de eliminar enemigos para cuando salgan de la pantalla
         removeEnemies();
@@ -255,7 +258,13 @@ public class GameScreen extends BaseScreen implements ContactListener {
     public void hide() {
         this.susuwatari.detach();
         this.susuwatari.remove();
-
+        for (Enemy enemy:
+             arrayenemies) {
+            enemy.detach();
+            enemy.remove();
+        }
+        this.stage.dispose();
+        this.world.dispose();
         this.musicbg.stop();
 
     }
@@ -272,17 +281,20 @@ public class GameScreen extends BaseScreen implements ContactListener {
         if (areColisioner(contact,USER_SUSUWATARI,USER_COUNTER) ) {
             this.scoreNumber++;
         }else{
+            //Al chocarse con otra cosa que no sea el counter el personaje
+            //llama al metodo hurt() y el sonido de choque suena
             susuwatari.hurt();
             this.hitSound.play();
-
+            //Al chocar hacemos que la música se pare y el sonido de GameOver
             this.musicbg.stop();
-            //this.gameOverSound.play();
-
+            this.gameOverSound.play();
+            //Recorremos con el foreach para parar los enemigos que se encuentran
+            //creados en el momento
             for (Enemy enemy : arrayenemies) {
                 enemy.stopEnemy();
             }
 
-            this.stage.addAction(Actions.sequence(
+            /*this.stage.addAction(Actions.sequence(
                     Actions.delay(1.5f),
                     Actions.run(new Runnable() {
                         @Override
@@ -290,7 +302,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
                             mainGame.setScreen(mainGame.gameOverScreen);
                         }
                     })
-            ));
+            ));*/
         }
     }
 
