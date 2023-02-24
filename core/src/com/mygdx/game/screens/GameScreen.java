@@ -42,7 +42,7 @@ import com.mygdx.game.actores.Susuwatari;
 
 public class GameScreen extends BaseScreen implements ContactListener {
 
-    //Todo. Constante indica el tiempo que queremos q dure el enemigo en la pantalla
+    //Constante indica el tiempo que queremos q dure el enemigo en la pantalla
     private static final float TIME_TO_SPAWN_ENEMIES = 1.3f;
     //para saber cuando crear al enemigo
     private float timeToCreateEnemy;

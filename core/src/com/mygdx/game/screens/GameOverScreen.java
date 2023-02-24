@@ -2,20 +2,16 @@ package com.mygdx.game.screens;
 
 
 
-import static com.mygdx.game.extra.Utils.SCREEN_HEIGHT;
-import static com.mygdx.game.extra.Utils.SCREEN_WIDTH;
+
 import static com.mygdx.game.extra.Utils.WORLD_HEIGHT;
 import static com.mygdx.game.extra.Utils.WORLD_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.MainGame;
-import com.mygdx.game.extra.AssetMan;
 
 public class GameOverScreen extends BaseScreen{
     //asignamos imagenes para el fondo,el touch y el rotulo de getReady

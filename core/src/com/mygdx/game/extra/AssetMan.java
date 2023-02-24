@@ -28,7 +28,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class AssetMan {
     private AssetManager assetManager;
     private TextureAtlas textureAtlas;
-    //Todo.El constructor se encarga de leer el ATLAS (donde se encuentran las imagenes)
+    //El constructor se encarga de leer el ATLAS (donde se encuentran las imagenes)
     // como la música y los sonidos
     public AssetMan() {
         this.assetManager = new AssetManager();

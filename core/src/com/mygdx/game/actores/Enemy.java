@@ -120,7 +120,7 @@ public class Enemy extends Actor {
         bodyEnemy.setLinearVelocity(0,0);
         bodyCounter.setLinearVelocity(0,0);
     }
-    //Todo. Sobrecarga de metodos
+
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -131,13 +131,13 @@ public class Enemy extends Actor {
        batch.draw(this.enemy,getX(),getY(), ENEMY_WIDTH, ENEMY_HEIGHT);
     }
 
-    //Todo. Creacion del método detach para liberar recursos
+    //Creacion del método detach para liberar recursos y memoria
     public void detach(){
         bodyEnemy.destroyFixture(fixtureEnemy);
         world.destroyBody(bodyEnemy);
     }
 
-    //Todo.Metodo avisa si el objeto esta fuera de la pantalla
+    //Metodo avisa si el objeto esta fuera de la pantalla
     public boolean isOut(){
         return this.bodyEnemy.getPosition().x <= -2f;
     }

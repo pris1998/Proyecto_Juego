@@ -18,7 +18,7 @@ public class MainGame extends Game {
     public GetReadyScreen getReadyScreen;
 
     public AssetMan assetManager;
-    //Inicialización de las pantallas
+    //Inicialización y creacion de las pantallas
     @Override
     public void create() {
         this.assetManager = new AssetMan();
