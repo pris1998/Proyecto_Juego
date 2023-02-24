@@ -115,10 +115,9 @@ public class GameScreen extends BaseScreen implements ContactListener {
      */
     public void addSusuwatari(){
         Animation<TextureRegion> susuSprite = mainGame.assetManager.getSusuwatariAnimation();
-        //asignamos un sonido independiente mientras está cayendo
-        Sound sound = mainGame.assetManager.getFallSound();
-        this.susuwatari = new Susuwatari(this.world,susuSprite,sound,new Vector2(1.5f,7.5f));
+        this.susuwatari = new Susuwatari(this.world,susuSprite,new Vector2(1.5f,7.5f));
         this.stage.addActor(this.susuwatari);
+
     }
 
     /**
@@ -171,7 +170,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
                 //aparecen los enemigos en x e y entre esas posiciones(0.5-4.5)
                 float posRandomX = MathUtils.random(0.5f,4.5f);
                 //posRandomX sale en una posicion random
-                Enemy var_enemy = new Enemy(this.world,oneEnemy,new Vector2(posRandomX,1f));
+                Enemy var_enemy = new Enemy(this.world,oneEnemy,new Vector2(posRandomX,-1f));
                 //añadimos al array los enemigos
                 arrayenemies.add(var_enemy);
                 //añadimos como actor
@@ -232,6 +231,7 @@ public class GameScreen extends BaseScreen implements ContactListener {
         //Ajustar la musica de fondo para que deje de sonar en forma de bucle
         this.musicbg.setLooping(true);
         this.musicbg.play();
+
     }
 
     @Override

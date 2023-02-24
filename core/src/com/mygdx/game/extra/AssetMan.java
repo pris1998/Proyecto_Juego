@@ -11,8 +11,6 @@ import static com.mygdx.game.extra.Utils.GAMEOVER_SOUND;
 import static com.mygdx.game.extra.Utils.GETREADY;
 import static com.mygdx.game.extra.Utils.HIT_SOUND;
 import static com.mygdx.game.extra.Utils.MUSIC_BG;
-import static com.mygdx.game.extra.Utils.SOUND_FALL;
-import static com.mygdx.game.extra.Utils.SOUND_FALL;
 import static com.mygdx.game.extra.Utils.SUSUWATARI1;
 import static com.mygdx.game.extra.Utils.SUSUWATARI2;
 import static com.mygdx.game.extra.Utils.TOUCH;
@@ -38,7 +36,6 @@ public class AssetMan {
         this.assetManager.load(ATLAS_MAP,TextureAtlas.class);
         //Carga la musica y los sonidos
         this.assetManager.load(MUSIC_BG, Music.class);
-        this.assetManager.load(SOUND_FALL, Sound.class);
         this.assetManager.load(HIT_SOUND,Sound.class);
         this.assetManager.load(GAMEOVER_SOUND,Sound.class);
         //hacemos que para de cargar
@@ -81,13 +78,6 @@ public class AssetMan {
         return this.assetManager.get(MUSIC_BG);
     }
 
-    /**
-     * Método getFallSound()
-     * @return el sonido del personaje mientras esta cayendo
-     */
-    public Sound getFallSound(){
-        return this.assetManager.get(SOUND_FALL);
-    }
 
     /**
      * Método getHit()

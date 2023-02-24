@@ -18,7 +18,6 @@ public class Utils {
     public static final String TOUCH = "touch";
 
     //Musica y sonido
-    public static final String SOUND_FALL = "caida.mp3";
     public static final String MUSIC_BG = "music_asia.mp3";
     public static final String HIT_SOUND = "hit.mp3";
     ///cambiar el gameover
