@@ -22,7 +22,7 @@ public class Utils {
     public static final String MUSIC_BG = "music_asia.mp3";
     public static final String HIT_SOUND = "hit.mp3";
     ///cambiar el gameover
-    public static final String GAMEOVER_SOUND = "caida2.mp3";
+    public static final String GAMEOVER_SOUND = "dead.mp3";
 
     //Identificadores de las fuentes
     public static final String FONT_FNT = "letras.fnt";

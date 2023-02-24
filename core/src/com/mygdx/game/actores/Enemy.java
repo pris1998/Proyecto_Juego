@@ -40,7 +40,7 @@ public class Enemy extends Actor {
     public Enemy( World world,TextureRegion enemy, Vector2 position) {
         this.world = world;
         this.enemy = enemy;
-
+        //Llamada de los metodos crean el Enemigo , la fixture y el counter
         createBodyEnemy(position);
         createFixture();
         createCounter();
@@ -62,7 +62,7 @@ public class Enemy extends Actor {
         bodyEnemy = world.createBody(bdef);
         //Asigna un identidificador
         bodyEnemy.setUserData(USER_ENEMY);
-
+        //le asigno una velocidad
         bodyEnemy.setLinearVelocity(0,SPEED);
 
     }
@@ -74,11 +74,13 @@ public class Enemy extends Actor {
      */
     private void createFixture(){
         PolygonShape shape = new PolygonShape();
+        //el tamaño del fixture
         shape.setAsBox(ENEMY_WIDTH /2, ENEMY_HEIGHT /2);
-
+        //Asigna al ficture el body del enemigo
         this.fixtureEnemy = bodyEnemy.createFixture(shape,12);
+        //Asigna un identificador
         this.fixtureEnemy.setUserData(Utils.USER_ENEMY);
-
+        //eliminamos de la memoria
         shape.dispose();
     }
 
@@ -102,14 +104,17 @@ public class Enemy extends Actor {
         polygonShape.setAsBox(WORLD_WIDTH,0.1f);
         //Asignamos el fixture tambien
         this.fixtureCounter = bodyCounter.createFixture(polygonShape,3);
-        //
+        //asignamos un sensor al fixture que servirá para saber que ha pasado por ahí el
+        //personaje
         this.fixtureCounter.setSensor(true);
+        //asignar un identificador
         this.fixtureCounter.setUserData(Utils.USER_COUNTER);
+        //eliminamos de la memoria
         polygonShape.dispose();
     }
 
     /**
-     * Método para para los enemgios
+     * Método para parar a los enemigos
      */
     public void stopEnemy(){
         bodyEnemy.setLinearVelocity(0,0);

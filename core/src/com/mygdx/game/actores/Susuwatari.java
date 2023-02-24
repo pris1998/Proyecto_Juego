@@ -22,19 +22,21 @@ public class Susuwatari extends Actor {
 
     //La potencia de la caída
     private static final float FALL_SPEED = 0.3f;
-
+    //Estado del personaje
     private int state;
-
+    //Guardo la animación del coche
     private Animation<TextureRegion> susuAnimation;
+    //Vector para saber la posición
     private Vector2 position;
     //tiempo q marca el momento en el q se ve los fotogramas
     private float stateTime;
-
+    //Encarga de controlar el apartado grafico
     private World world;
-
+    //Body crea el cuerpo del personaje
      private Body body ;
+     //Hitbox para guardad el fixture del personaje
      private Fixture fixture;
-
+    //Guarda el sonido que hace el personaje en este caso al caer
      private Sound fallSound;
 
     public Susuwatari( World world,Animation<TextureRegion> susuAnimation,Sound sound, Vector2 position) {
@@ -45,7 +47,7 @@ public class Susuwatari extends Actor {
         this.stateTime = 0f;
         this.state = STATE_NORMAL;
         this.fallSound = sound;
-
+        //Llamada a los métodos de crear el Body y el Fixture
         createBody();
         createFixture();
 
@@ -124,11 +126,11 @@ public class Susuwatari extends Actor {
             this.fallSound.play();
             this.body.setLinearVelocity(-3,-FALL_SPEED);
         }else if(fall < -1 ){
-            //Si es menor que -1 tambien le asignamso el sonido otro lateral
+            //Si es menor que -1 tambien le asignamso el sonido otro lateral y se mueve en un lateral
             this.body.setLinearVelocity(3,-FALL_SPEED);
             this.fallSound.play();
         }else{
-            //Cuando se x=0 tambien se mueve y se activa el sonido
+            //Cuando se x=0 tambien se mueve en línea recta hacia abajo y se activa el sonido
             this.body.setLinearVelocity(0,-FALL_SPEED);
             this.fallSound.play();
         }
